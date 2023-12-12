@@ -1,0 +1,24 @@
+{% load i18n %}
+<div class="large-5 columns" data-equalizer-watch>
+    <p>
+{{ press.footer_description|default:""|safe }}
+</div>
+<div class="large-5 columns large-text-right" data-equalizer-watch>
+    <ul class="inline-list">
+      {% if press.privacy_policy_url %}
+        <li><a href="{{ press.privacy_policy_url }}">{% trans "Privacy Policy" %}</a></li>
+      {% else %}
+        <li><a href="{% url 'cms_page' "privacy" %}">{% trans "Privacy Policy" %}</a></li>
+      {% endif %}
+        <li><a href="{% url 'website_sitemap' %}">{% trans "Sitemap" %}</a></li>
+        <li><a href="{% url 'contact' %}">{% trans "Contact" %}</a></li>
+        <li><a target="_blank" href="{% url 'cms_page' "disclaimer" %}">{% trans "Disclaimer" %}</a></li>
+        {% if not request.user.is_authenticated %}<li><a href="{% url 'core_login' %}">{% trans 'Login' %}</a></li>{% endif %}
+    </ul>
+    <ul class="inline-list">
+        <li>
+            <a target="_blank" href="https://twitter.com/UCLpress"><span class="fa fa-twitter">&nbsp;</span></a>
+            <a target="_blank" href="https://www.facebook.com/uclpresspublishing/"><span class="fa fa-facebook">&nbsp;</span></a>
+        </li>
+    </ul>
+</div>
