@@ -171,10 +171,19 @@
                     </div>
                 <hr/>
                 {% endif %}
+                            {% if journal_settings.general.uses_isolinear_plugin and not article.is_published %}
+                                {% if article.is_accepted %}
+                                    <p><strong>This article is an accepted preprint. Production is underway.</strong></p>
+                                {% elif 'Under Review' in article.stage_log_list %}
+                                    <p><strong>This article is a preprint currently under revision.</strong></p>
+                                {% else %}
+                                <p><strong>This article is a preprint and has not been peer-reviewed, under consideration and submitted to UCL Open: Environment for open peer review.</strong></p>
+                                {% endif %}
+                            {% endif %}
                             {% if article.abstract and article.abstract != ''%}
                                 <h3>{% trans "Abstract" %}</h3>
                                 {% if journal_settings.general.uses_isolinear_plugin and not article.is_published %}
-                                    {% hook 'preprint_abstract_block' article.abstract %}
+                                    {{ article.abstract|safe }}
                                 {% else %}
                                     {{ article.abstract_display|safe }}
                                 {% endif %}
@@ -294,10 +303,10 @@
                                         {% else %}
                                         <div class="large-6 columns" data-equalizer-watch>
                                         {% endif %}
-                                            {% if article.peer_reviewed %}
-                                                <h5>{% trans "Peer Reviewed" %}</h5>
-                                            {% elif journal_settings.general.uses_isolinear_plugin and not article.is_published  %}
+                                            {% if journal_settings.general.uses_isolinear_plugin and not article.is_published %}
                                                 <h5>Preprint Under Review</h5>
+                                            {% elif article.peer_reviewed %}
+                                                <h5>{% trans "Peer Reviewed" %}</h5>
                                             {% endif %}
                                         </div>
                                         {% if article.date_published or article.date_accepted or proofing %}
@@ -322,11 +331,13 @@
                                     </div>
                                 </article>
                             {% endif %}
+                            {% if article.preprint and not article.is_published %}
                             {% hook 'article_content' %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <aside class="large-4 columns " data-sticky-container>
+                <aside class="large-4 columns" data-sticky-container>
                     <div class="sticky" data-sticky data-margin-top="0"
                           data-anchor="content" data-sticky-on="large">
 
@@ -471,25 +482,11 @@
 
                         {% if article.preprint and article.is_published %}
                         <div class="section hide-for-small-only">
-                            <h3>{{ article.preprint.repository.object_name }}</h3>
-                            <p>This article is linked to a {{ article.preprint.repository.object_name }} in {{ article.preprint.repository.name }}.</p>
-                            <p><a href="{{ article.preprint.url }}">{{ article.preprint.title }}</a></p>
+                            <h3>Preprint Details</h3>
+                            <ul><li>Date of First Publication: {{ article.preprint.date_published|date:"Y-m-D" }}</li></ul>
+                            {% hook 'preprint_version_downloads' %}
                         </div>
                         {% endif %}
-
-                        {% if galleys %}
-                        <div class="section hide-for-small-only">
-                            <h3>{% trans "File Checksums (MD5)" %}</h3>
-                            <ul>
-                                {% for galley in galleys %}
-                                    <li>
-                                        <small>{{ galley.label }}: {{ galley.file.checksum }}</small>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        {% endif %}
-
                         <div class="section hide-for-small-only">
                             {% if journal_settings.general.open_peer_review %}
                                 {% if article.public_reviews.count > 0 %}
@@ -502,6 +499,18 @@
                                 {% endif %}
                             {% endif %}
                         </div>
+                        {% if galleys %}
+                        <div class="section hide-for-small-only">
+                            <h3>{% trans "File Checksums (MD5)" %}</h3>
+                            <ul>
+                                {% for galley in galleys %}
+                                    <li>
+                                        <small>{{ galley.label }}: {{ galley.file.checksum }}</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                     </div>
                 </aside>
             </div>
