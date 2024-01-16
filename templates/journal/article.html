@@ -485,7 +485,7 @@
                         {% if article.preprint and article.is_published %}
                         <div class="section hide-for-small-only">
                             <h3>Preprint Details</h3>
-                            <ul><li>Date of First Publication: {{ article.preprint.date_published|date:"Y-m-D" }}</li></ul>
+                            <ul><li>Date of First Publication: {{ article.preprint.date_published|date:"Y-m-d" }}</li></ul>
                             {% hook 'preprint_version_downloads' %}
                         </div>
                         {% endif %}
