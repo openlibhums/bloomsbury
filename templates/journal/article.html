@@ -174,11 +174,13 @@
                             {% if journal_settings.general.uses_isolinear_plugin and not article.is_published %}
                                 {% if article.is_accepted %}
                                     <p><strong>This article is an accepted preprint. Production is underway.</strong></p>
-                                {% elif 'Under Review' in article.stage_log_list %}
-                                    <p><strong>This article is a preprint currently under revision.</strong></p>
                                 {% elif article.date_declined %}
                                     <p><strong>This article is a preprint that has been withdrawn from submission.</strong></p>
                                     <p>The submission has been declined for publication by the Editors of UCL Open: Environment and withdrawn from submission. This preprint (and all other versions of it) will remain online on the preprint server with its registered DOI, but the article is no longer under consideration for peer review at UCL Open: Environment and the authors are free to submit this manuscript to any other relevant journal of their choice. For more information about this please read the journal’s Editorial Policy</p>
+                                {% elif article.date_accepted %}
+                                    <p><strong>This article is a preprint and is currently undergoing peer review by UCL Open: Environment.</strong></p>
+                                {% elif 'Under Review' in article.stage_log_list and not article.date_accepted %}
+                                    <p><strong>This article is a preprint currently under revision.</strong></p>
                                 {% else %}
                                     <p><strong>This article is a preprint and is currently undergoing peer review by UCL Open: Environment.</strong></p>
                                 {% endif %}
