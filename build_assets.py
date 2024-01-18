@@ -5,13 +5,22 @@ from django.conf import settings
 
 
 def build():
-    image_file = os.path.join(
-        settings.BASE_DIR,
-        'themes',
-        'bloomsbury',
-        'assets',
-        'preprint_thumb.jpg'
-    )
+    image_files = [
+        os.path.join(
+            settings.BASE_DIR,
+            'themes',
+            'bloomsbury',
+            'assets',
+            'preprint_thumb.jpg'
+        ),
+        os.path.join(
+            settings.BASE_DIR,
+            'themes',
+            'bloomsbury',
+            'assets',
+            'ucl_press_footer.svg'
+        ),
+    ]
     dest_path = os.path.join(
         settings.BASE_DIR,
         'static',
@@ -22,7 +31,9 @@ def build():
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
 
-    shutil.copy(
-        image_file,
-        dest_path
-    )
+    for image_file in image_files:
+        print("Copying file for bloomsbury theme.")
+        shutil.copy(
+            image_file,
+            dest_path
+        )
