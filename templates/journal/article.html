@@ -172,7 +172,7 @@
                 <hr/>
                 {% endif %}
                             {% if journal_settings.general.uses_isolinear_plugin and not article.is_published %}
-                                {% if article.is_accepted %}
+                                {% if article.date_accepted %}
                                     <p><strong>This article is an accepted preprint. Production is underway.</strong></p>
                                 {% elif article.date_declined %}
                                     <p><strong>This article is a preprint that has been withdrawn from submission.</strong></p>
