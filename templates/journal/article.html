@@ -496,11 +496,24 @@
                             {% if journal_settings.general.open_peer_review %}
                                 {% if article.public_reviews.count > 0 %}
                                     <h3>{% trans "Peer Review" %}</h3>
-                                    <ul>
-                                        {% for review in article.public_reviews %}
-                                            <li><a href="#" data-open="reviewmodal-{{ review.pk }}">Review by {{ review.reviewer.full_name }}</a></li>
+                                     {% for round in article.reviewround_set.all %}
+                                         <ul>
+                                            {% if round.reviewassignment_set.all %}
+                                                <li>
+                                                    Version {{ round.round_number }}</li>
+                                                <ul>
+                                                    {% for review in round.reviewassignment_set.all %}
+                                                        {% if review.display_public %}
+                                                        <li><a href="#"
+                                                               data-open="reviewmodal-{{ review.pk }}">Review
+                                                            by {{ review.reviewer.full_name }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                         </ul>
                                         {% endfor %}<br/>
-                                    </ul>
                                 {% endif %}
                             {% endif %}
                         </div>
