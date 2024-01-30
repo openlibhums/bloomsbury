@@ -184,7 +184,7 @@
                                 {% elif not preprint_version == article.preprint.current_version %}
                                  This is version {{ preprint_version.version }} of this article, a newer version of this article is available at:
                                     {% if preprint_version.get_doi %}
-                                        <a href="https://doi.org/{{ preprint_version.get_doi }}">https://doi.org/{{ preprint_version.get_doi }}</a>
+                                        <a href="https://doi.org/{{ preprint_version.preprint.current_version.get_doi }}">https://doi.org/{{ preprint_version.preprint.current_version.get_doi }}</a>
                                     {% else %}
                                         <a href="{% site_url 'isolinear_preprint_version' article.pk preprint_version.preprint.current_version.version %}">{% site_url 'isolinear_preprint_version' article.pk preprint_version.preprint.current_version.version %}</a>
                                     {% endif %}
