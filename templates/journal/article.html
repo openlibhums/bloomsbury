@@ -403,7 +403,7 @@
                             </div>
                             {% endif %}
                             {% with article.get_doi_url as doi_url %}
-                                {% if doi_url %}
+                                {% if doi_url and article.is_published %}
                                  <div class="section">
                                      <h3>{% trans "Identifiers" %}</h3>
                                      <ul>
