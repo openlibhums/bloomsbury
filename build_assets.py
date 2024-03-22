@@ -20,6 +20,14 @@ def build():
             'assets',
             'ucl_press_footer.svg'
         ),
+        os.path.join(
+            settings.BASE_DIR,
+            'themes',
+            'bloomsbury',
+            'assets',
+            'js',
+            'toc.js',
+        )
     ]
     dest_path = os.path.join(
         settings.BASE_DIR,
