@@ -5,7 +5,7 @@
 
 {% block page_title %}{% if article.preprint %}{% trans "Preprint" %} {% endif %}{% trans "Article" %}{% endblock %}
 
-{% block title %}{{ article.frozen_authors.0.last_name | striptags }} | {{ preprint_version.title | striptags }} |
+{% block title %}{{ article.frozen_authors.0.last_name | striptags }} |{% if preprint_version.title %} {{ preprint_version.title|striptags }}{% else %}{{ article|striptags }}{% endif %} | striptags }} |
     {{ journal_settings.general.journal_name | striptags }} {% endblock %}
 
 {% block head %}
@@ -152,7 +152,7 @@
                         <div id="article" class="large-10 columns">
                 {% if journal_settings.article.disable_article_large_image %}
                     <small>{{ article.section.name }}</small>
-                    <h1>{{ preprint_version.title|safe }}</h1>
+                    <h1>{% if preprint_version.title %}{{ preprint_version.title|safe }}{% else %}{{ article.title|safe }}{% endif %}</h1>
                     <div class="section show-for-small-only">
                         <strong>{% if article.frozen_authors.count > 1 %}
                             {% trans "Authors" %}
