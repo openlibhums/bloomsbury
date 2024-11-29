@@ -24,9 +24,7 @@
                     {% endfor %}
                     <p>
                       <strong>Note:</strong><br/>
-                      This review refers to round {{ review.review_round.round_number }} of peer review
-                      {% if review.review_round.round_number == article.current_review_round %}.
-                      {% elif review.review_round.round_number < article.current_review_round %}
+                      This review refers to round {{ review.review_round.round_number }} of peer review{% if review.review_round.round_number == article.current_review_round %}.{% elif review.review_round.round_number < article.current_review_round %}
                           and may pertain to an earlier version of the document.
                       {% endif %}
                     </p>
